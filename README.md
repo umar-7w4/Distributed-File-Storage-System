@@ -1,8 +1,8 @@
+### Distributed File System
+
 ### Introduction
 
 #### Project Overview
-
-**Distributed File System**
 
 The Distributed File System (DFS) is designed to manage and store data across multiple networked nodes, ensuring high availability, reliability, and scalability. This project simulates a simplified version of a DFS, commonly used in large-scale computing environments to distribute data storage and processing across several servers, enabling efficient data management and access.
 
@@ -10,15 +10,66 @@ The Distributed File System (DFS) is designed to manage and store data across mu
 
 The primary purpose of this project is to demonstrate the implementation of a distributed file system that can handle client requests for reading and writing data. The system is designed to distribute data blocks across multiple DataNodes and coordinate these operations through a central NameNode. This setup is inspired by real-world distributed systems like Hadoop's HDFS (Hadoop Distributed File System).
 
-**Scope:**
+### Component Tree
 
-The scope of this project includes:
-1. **NameNode:** A central coordinator that manages metadata about file locations and coordinates communication with DataNodes.
-2. **DataNodes:** Storage nodes that handle the actual data storage and retrieval, managed by the NameNode.
-3. **Client:** An interface for users to interact with the system, allowing them to perform read and write operations on files stored in the DFS.
-4. **Networking and Concurrency:** Implementation of network communication between nodes and clients, and handling concurrent client requests.
+```plaintext
+Distributed File System
+├── Client
+│   ├── startConnection(String ip, int port)
+│   ├── sendMessage(String msg)
+│   ├── stopConnection()
+│   ├── handleReadCommand(String filename)
+│   ├── handleAppendCommand(String filename, String content)
+│   └── handleShutdownCommand()
+├── NameNode
+│   ├── start(int port)
+│   ├── initiateShutdown()
+│   ├── append(String filename, String content, NameNodeHandlerClient dataNodeClient)
+│   ├── read(String filename, NameNodeHandlerClient dataNodeClient)
+│   ├── stop()
+│   ├── NameNodeHandler
+│   │   ├── run()
+│   │   ├── shutdown()
+│   │   ├── append(String filename, String content, NameNodeHandlerClient dataNodeClient)
+│   │   ├── read(String filename, NameNodeHandlerClient dataNodeClient)
+│   │   └── sendResponse(String message)
+│   └── NameNodeHandlerClient
+│       ├── startConnection(String ip, int port)
+│       ├── sendMessage(String msg)
+│       └── stopConnection()
+├── DataNode
+│   ├── start(int port)
+│   ├── alloc()
+│   ├── read(int blk_id)
+│   ├── write(int blk_id, String contents)
+│   ├── stop()
+│   ├── DataNodeHandler
+│   │   ├── run()
+│   │   ├── shutdown()
+│   │   └── handleCommand(String command)
+│   └── Helper Methods
+│       ├── isFull()
+│       ├── numEmptyBlks()
+│       ├── print()
+│       ├── mockRun()
+│       └── parseCmdLine(String[] args)
+├── Block
+│   ├── getFilename()
+│   ├── getRLock()
+│   ├── getWLock()
+├── Central
+│   ├── main(String[] args)
+├── Pair
+│   ├── getDataNode()
+│   ├── setDataNode(String DNum)
+│   ├── getBlockNode()
+│   └── setBlockNode(int BNum)
+├── StartDataNodes
+│   ├── main(String[] args)
+│   └── startNode(int port, String logFile)
+```
 
-#### Goals and Objectives
+### Goals and Objectives
 
 **Main Goals:**
 
@@ -52,7 +103,6 @@ The scope of this project includes:
 5. **Robust Error Handling and Graceful Shutdown:**
    - Implement error handling to manage network failures, data inconsistencies, and other potential issues.
    - Implement a graceful shutdown mechanism to safely terminate the system, ensuring all operations are completed and resources are released.
-
 
 ### Getting Started
 
@@ -197,6 +247,8 @@ The Distributed File System (DFS) is designed with a client-server architecture 
    - The NameNode acts as the central coordinator. It manages metadata about file locations and coordinates communication with DataNodes to handle client requests.
 
 3. **DataNodes:**
+
+
    - DataNodes are storage nodes responsible for storing actual data blocks. They handle read and write operations as directed by the NameNode.
 
 **Workflow:**
@@ -281,7 +333,35 @@ The Distributed File System (DFS) is designed with a client-server architecture 
 - **DataNodes:**
   - DataNodes are independent of each other but work collectively to store data blocks distributed by the NameNode.
 
-**Summary:**
+### Future Work
 
-The Distributed File System is composed of three main components: the Client, NameNode, and DataNodes. The Client provides an interface for users to interact with the system, the NameNode acts as the central coordinator managing metadata and coordinating data operations, and the DataNodes handle the actual storage and retrieval of data blocks. This architecture ensures efficient data management and scalability, with a clear separation of responsibilities among the components. The system supports concurrent client handling, data distribution, robust error handling, and graceful shutdown, making it a reliable and scalable solution for distributed file storage.
+**Develop Full Stack Application:**
 
+1. **Backend Development:**
+   - **Spring Boot:** Transition the backend logic from plain Java to a Spring Boot application. This will allow for easier management of dependencies, enhanced security features, and built-in support for RESTful APIs.
+   - **Microservices Architecture:** Break down the monolithic application into microservices to improve scalability, maintainability, and deployment flexibility.
+
+2. **Frontend Development:**
+   - **React:** Develop a user-friendly frontend using React. This will provide a modern, responsive interface for users to interact with the distributed file system, including features like file upload, download, and visualization of system status.
+
+3. **Containerization:**
+   - **Docker:** Containerize the application using Docker to ensure consistent environments across development, testing, and production. This will also simplify the deployment process.
+
+4. **Database Integration:**
+   - **PostgreSQL:** Integrate PostgreSQL for persistent metadata storage. This will replace in-memory storage and provide durability and advanced querying capabilities for file metadata.
+
+5. **Cloud Deployment:**
+   - **AWS:** Deploy the application on AWS for high availability and scalability. Utilize AWS services like EC2 for computation, S3 for storage, RDS for the PostgreSQL database, and ECS/EKS for container orchestration.
+
+**Steps for Future Work:**
+1. **Refactor the current codebase to use Spring Boot for the backend.**
+2. **Develop a React frontend to interact with the Spring Boot backend via REST APIs.**
+3. **Containerize the backend and frontend using Docker.**
+4. **Integrate PostgreSQL for metadata storage.**
+5. **Deploy the application on AWS, leveraging various AWS services for different components.**
+
+### License
+
+```
+This project is licensed under the @2024 Umar Mohammad
+```
