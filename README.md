@@ -10,6 +10,26 @@ The **Distributed File System (DFS)** is designed to manage and store data acros
 
 The primary purpose of this project is to demonstrate the implementation of a distributed file system that can handle client requests for reading and writing data. The system is designed to distribute data blocks across multiple DataNodes and coordinate these operations through a central NameNode. This setup is inspired by real-world distributed systems like Hadoop's HDFS (Hadoop Distributed File System).
 
+### Table of Contents
+
+1. [Distributed File System](#distributed-file-system)
+2. [Introduction](#introduction)
+   - [Project Overview](#project-overview)
+   - [Purpose](#purpose)
+3. [Component Tree](#component-tree)
+4. [Goals and Objectives](#goals-and-objectives)
+   - [Main Goals](#main-goals)
+   - [Specific Objectives](#specific-objectives)
+5. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation Guide](#installation-guide)
+   - [Quick Start](#quick-start)
+6. [Architecture](#architecture)
+   - [System Architecture](#system-architecture)
+   - [Modules and Components](#modules-and-components)
+7. [Future Work](#future-work)
+8. [License](#license)
+
 ### Component Tree
 
 ```plaintext
