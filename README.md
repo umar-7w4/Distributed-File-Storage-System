@@ -4,7 +4,7 @@
 
 #### Project Overview
 
-The Distributed File System (DFS) is designed to manage and store data across multiple networked nodes, ensuring high availability, reliability, and scalability. This project simulates a simplified version of a DFS, commonly used in large-scale computing environments to distribute data storage and processing across several servers, enabling efficient data management and access.
+The **Distributed File System (DFS)** is designed to manage and store data across multiple networked nodes, ensuring high availability, reliability, and scalability. This project simulates a simplified version of a DFS, commonly used in large-scale computing environments to distribute data storage and processing across several servers, enabling efficient data management and access.
 
 **Purpose:**
 
