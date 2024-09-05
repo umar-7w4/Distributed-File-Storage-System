@@ -355,30 +355,19 @@ The Distributed File System (DFS) is designed with a client-server architecture 
 
 ### Future Work
 
-**Develop Full Stack Application:**
+1. **Data Replication for Fault Tolerance:**
+   - **Replicate Data Across Multiple DataNodes:** Implement a replication mechanism where each data block is stored on multiple DataNodes to ensure redundancy and fault tolerance. In case of a DataNode failure, the system can retrieve data from a replica on another node.
+   - **Configurable Replication Factor:** Allow the system administrator to configure the replication factor, enabling flexibility in determining how many copies of each block should be stored for redundancy.
 
-1. **Backend Development:**
-   - **Spring Boot:** Transition the backend logic from plain Java to a Spring Boot application. This will allow for easier management of dependencies, enhanced security features, and built-in support for RESTful APIs.
-   - **Microservices Architecture:** Break down the monolithic application into microservices to improve scalability, maintainability, and deployment flexibility.
+2. **NameNode Clustering for High Availability:**
+   - **Primary and Standby NameNodes:** Develop a cluster of NameNodes with one primary and multiple standby nodes. The standby nodes will be able to take over automatically in the event of a failure of the primary, ensuring continuous operation of the file system.
+   - **Metadata Replication:** Synchronize metadata (block locations, file information) across all NameNodes in the cluster to ensure a seamless failover process and avoid data loss.
 
-2. **Frontend Development:**
-   - **React:** Develop a user-friendly frontend using React. This will provide a modern, responsive interface for users to interact with the distributed file system, including features like file upload, download, and visualization of system status.
+3. **Leader Election for NameNode Failover:**
+   - **Zookeeper-Based Coordination:** Use Zookeeper or a similar coordination service to handle leader election among the NameNodes. This ensures that when the primary NameNode fails, a new leader is elected automatically, minimizing downtime.
 
-3. **Containerization:**
-   - **Docker:** Containerize the application using Docker to ensure consistent environments across development, testing, and production. This will also simplify the deployment process.
-
-4. **Database Integration:**
-   - **PostgreSQL:** Integrate PostgreSQL for persistent metadata storage. This will replace in-memory storage and provide durability and advanced querying capabilities for file metadata.
-
-5. **Cloud Deployment:**
-   - **AWS:** Deploy the application on AWS for high availability and scalability. Utilize AWS services like EC2 for computation, S3 for storage, RDS for the PostgreSQL database, and ECS/EKS for container orchestration.
-
-**Steps for Future Work:**
-1. **Refactor the current codebase to use Spring Boot for the backend.**
-2. **Develop a React frontend to interact with the Spring Boot backend via REST APIs.**
-3. **Containerize the backend and frontend using Docker.**
-4. **Integrate PostgreSQL for metadata storage.**
-5. **Deploy the application on AWS, leveraging various AWS services for different components.**
+4. **Data Rebalancing Across DataNodes:**
+   - **Automatic Data Rebalancing:** Implement a rebalancing mechanism to redistribute data blocks across DataNodes when new nodes are added or removed. This will optimize storage utilization and improve performance by evenly distributing the load.
 
 ### License
 
