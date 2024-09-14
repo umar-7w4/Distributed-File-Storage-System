@@ -24,7 +24,7 @@ The primary purpose of this project is to demonstrate the implementation of a di
    - [Prerequisites](#prerequisites)
    - [Installation Guide](#installation-guide)
    - [Quick Start](#quick-start)
-6. [Architecture](#architecture)
+6. [Architecture with Diagram](#architecture)
    - [System Architecture](#system-architecture)
    - [Modules and Components](#modules-and-components)
 7. [Future Work](#future-work)
@@ -245,18 +245,7 @@ The Distributed File System (DFS) is designed with a client-server architecture 
 
 **Architecture Diagram:**
 
-```plaintext
-+------------+         +------------+         +------------+
-|   Client   | <-----> |  NameNode  | <-----> |  DataNode  |
-+------------+         +------------+         +------------+
-                             ^                      ^
-                             |                      |
-                             |                      |
-                             |                      |
-                       +------------+         +------------+
-                       |  DataNode  |         |  DataNode  |
-                       +------------+         +------------+
-```
+![Distributed File System](https://github.com/umar-7w4/Distributed-File-Storage-System/blob/main/Distributed%20File%20System.jpeg)
 
 **Explanation:**
 
