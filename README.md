@@ -20,13 +20,13 @@ The primary purpose of this project is to demonstrate the implementation of a di
 4. [Goals and Objectives](#goals-and-objectives)
    - [Main Goals](#main-goals)
    - [Specific Objectives](#specific-objectives)
-5. [Getting Started](#getting-started)
+5. [Architecture with Diagram](#architecture)
+   - [System Architecture](#system-architecture)
+   - [Modules and Components](#modules-and-components)
+6. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Installation Guide](#installation-guide)
    - [Quick Start](#quick-start)
-6. [Architecture with Diagram](#architecture)
-   - [System Architecture](#system-architecture)
-   - [Modules and Components](#modules-and-components)
 7. [Future Work](#future-work)
 8. [License](#license)
 
@@ -123,6 +123,113 @@ Distributed File System
 5. **Robust Error Handling and Graceful Shutdown:**
    - Implement error handling to manage network failures, data inconsistencies, and other potential issues.
    - Implement a graceful shutdown mechanism to safely terminate the system, ensuring all operations are completed and resources are released.
+
+### Architecture
+
+#### System Architecture
+
+**Overview:**
+
+The Distributed File System (DFS) is designed with a client-server architecture consisting of three main components: the NameNode, DataNodes, and Client. The system manages file storage and retrieval across multiple networked nodes, ensuring high availability, reliability, and scalability.
+
+**Architecture Diagram:**
+
+![Distributed File System](https://github.com/umar-7w4/Distributed-File-Storage-System/blob/main/Distributed%20File%20System.jpeg)
+
+**Explanation:**
+
+1. **Client:**
+   - The Client is the interface through which users interact with the DFS. It sends requests to the NameNode to read or append data to files.
+
+2. **NameNode:**
+   - The NameNode acts as the central coordinator. It manages metadata about file locations and coordinates communication with DataNodes to handle client requests.
+
+3. **DataNodes:**
+
+
+   - DataNodes are storage nodes responsible for storing actual data blocks. They handle read and write operations as directed by the NameNode.
+
+**Workflow:**
+
+1. **Client Request:**
+   - The Client sends a request to the NameNode (e.g., read, append, or shutdown).
+   
+2. **Request Handling:**
+   - The NameNode processes the request, updates metadata, and coordinates with DataNodes for data operations.
+   
+3. **Data Operations:**
+   - DataNodes perform the necessary data storage or retrieval operations and communicate the results back to the NameNode.
+   
+4. **Response:**
+   - The NameNode sends a response back to the Client, completing the operation.
+
+#### Modules and Components
+
+**1. NameNode**
+
+**Responsibilities:**
+- Manage metadata about file locations and data blocks.
+- Coordinate read and write operations between clients and DataNodes.
+- Handle client connections and process requests.
+
+**Components:**
+- **ServerSocket:** Listens for incoming client connections.
+- **Handler Threads:** Manages individual client requests in separate threads.
+- **Metadata Storage:** Stores information about file locations and associated data blocks.
+
+**Key Methods:**
+- `start(int port)`: Starts the NameNode server on the specified port.
+- `initiateShutdown()`: Initiates the shutdown process.
+- `append(String filename, String content, NameNodeHandlerClient dataNodeClient)`: Appends content to a file.
+- `read(String filename, NameNodeHandlerClient dataNodeClient)`: Reads content from a file.
+
+**2. DataNode**
+
+**Responsibilities:**
+- Store and manage data blocks.
+- Handle read and write operations as directed by the NameNode.
+- Ensure data consistency and integrity.
+
+**Components:**
+- **ServerSocket:** Listens for incoming connections from the NameNode.
+- **Handler Threads:** Manages individual requests from the NameNode in separate threads.
+- **Block Storage:** Stores data blocks in files.
+
+**Key Methods:**
+- `alloc()`: Allocates a new data block.
+- `read(int blk_id)`: Reads data from a specified block.
+- `write(int blk_id, String contents)`: Writes data to a specified block.
+- `start(int port)`: Starts the DataNode server on the specified port.
+
+**3. Client**
+
+**Responsibilities:**
+- Provide a user-friendly interface for interacting with the DFS.
+- Allow users to perform read, write, and shutdown operations.
+- Handle network communication with the NameNode.
+
+**Components:**
+- **Socket:** Establishes a connection to the NameNode.
+- **Input/Output Streams:** Sends requests to and receives responses from the NameNode.
+
+**Key Methods:**
+- `startConnection(String ip, int port)`: Starts a connection to the NameNode.
+- `sendMessage(String msg)`: Sends a message to the NameNode and returns the response.
+- `stopConnection()`: Closes the connection to the NameNode.
+- `handleReadCommand(String filename)`: Handles read operations.
+- `handleAppendCommand(String filename, String content)`: Handles append operations.
+- `handleShutdownCommand()`: Handles shutdown operations.
+
+**Relationships:**
+
+- **Client to NameNode:**
+  - The Client sends read, append, and shutdown requests to the NameNode.
+  
+- **NameNode to DataNodes:**
+  - The NameNode coordinates with DataNodes to perform data storage and retrieval operations.
+
+- **DataNodes:**
+  - DataNodes are independent of each other but work collectively to store data blocks distributed by the NameNode.
 
 ### Getting Started
 
@@ -234,113 +341,6 @@ Distributed File System
   ```sh
   ::shutdown
   ```
-
-### Architecture
-
-#### System Architecture
-
-**Overview:**
-
-The Distributed File System (DFS) is designed with a client-server architecture consisting of three main components: the NameNode, DataNodes, and Client. The system manages file storage and retrieval across multiple networked nodes, ensuring high availability, reliability, and scalability.
-
-**Architecture Diagram:**
-
-![Distributed File System](https://github.com/umar-7w4/Distributed-File-Storage-System/blob/main/Distributed%20File%20System.jpeg)
-
-**Explanation:**
-
-1. **Client:**
-   - The Client is the interface through which users interact with the DFS. It sends requests to the NameNode to read or append data to files.
-
-2. **NameNode:**
-   - The NameNode acts as the central coordinator. It manages metadata about file locations and coordinates communication with DataNodes to handle client requests.
-
-3. **DataNodes:**
-
-
-   - DataNodes are storage nodes responsible for storing actual data blocks. They handle read and write operations as directed by the NameNode.
-
-**Workflow:**
-
-1. **Client Request:**
-   - The Client sends a request to the NameNode (e.g., read, append, or shutdown).
-   
-2. **Request Handling:**
-   - The NameNode processes the request, updates metadata, and coordinates with DataNodes for data operations.
-   
-3. **Data Operations:**
-   - DataNodes perform the necessary data storage or retrieval operations and communicate the results back to the NameNode.
-   
-4. **Response:**
-   - The NameNode sends a response back to the Client, completing the operation.
-
-#### Modules and Components
-
-**1. NameNode**
-
-**Responsibilities:**
-- Manage metadata about file locations and data blocks.
-- Coordinate read and write operations between clients and DataNodes.
-- Handle client connections and process requests.
-
-**Components:**
-- **ServerSocket:** Listens for incoming client connections.
-- **Handler Threads:** Manages individual client requests in separate threads.
-- **Metadata Storage:** Stores information about file locations and associated data blocks.
-
-**Key Methods:**
-- `start(int port)`: Starts the NameNode server on the specified port.
-- `initiateShutdown()`: Initiates the shutdown process.
-- `append(String filename, String content, NameNodeHandlerClient dataNodeClient)`: Appends content to a file.
-- `read(String filename, NameNodeHandlerClient dataNodeClient)`: Reads content from a file.
-
-**2. DataNode**
-
-**Responsibilities:**
-- Store and manage data blocks.
-- Handle read and write operations as directed by the NameNode.
-- Ensure data consistency and integrity.
-
-**Components:**
-- **ServerSocket:** Listens for incoming connections from the NameNode.
-- **Handler Threads:** Manages individual requests from the NameNode in separate threads.
-- **Block Storage:** Stores data blocks in files.
-
-**Key Methods:**
-- `alloc()`: Allocates a new data block.
-- `read(int blk_id)`: Reads data from a specified block.
-- `write(int blk_id, String contents)`: Writes data to a specified block.
-- `start(int port)`: Starts the DataNode server on the specified port.
-
-**3. Client**
-
-**Responsibilities:**
-- Provide a user-friendly interface for interacting with the DFS.
-- Allow users to perform read, write, and shutdown operations.
-- Handle network communication with the NameNode.
-
-**Components:**
-- **Socket:** Establishes a connection to the NameNode.
-- **Input/Output Streams:** Sends requests to and receives responses from the NameNode.
-
-**Key Methods:**
-- `startConnection(String ip, int port)`: Starts a connection to the NameNode.
-- `sendMessage(String msg)`: Sends a message to the NameNode and returns the response.
-- `stopConnection()`: Closes the connection to the NameNode.
-- `handleReadCommand(String filename)`: Handles read operations.
-- `handleAppendCommand(String filename, String content)`: Handles append operations.
-- `handleShutdownCommand()`: Handles shutdown operations.
-
-**Relationships:**
-
-- **Client to NameNode:**
-  - The Client sends read, append, and shutdown requests to the NameNode.
-  
-- **NameNode to DataNodes:**
-  - The NameNode coordinates with DataNodes to perform data storage and retrieval operations.
-
-- **DataNodes:**
-  - DataNodes are independent of each other but work collectively to store data blocks distributed by the NameNode.
 
 ### Future Work
 
