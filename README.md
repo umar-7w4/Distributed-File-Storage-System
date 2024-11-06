@@ -4,7 +4,7 @@
 
 #### Project Overview
 
-The **Distributed File System (DFS)** is designed to manage and store data across multiple networked nodes, ensuring high availability, reliability, and scalability. This project simulates a simplified version of a DFS, commonly used in large-scale computing environments to distribute data storage and processing across several servers, enabling efficient data management and access.
+The **Distributed File System (DFS)** is designed to manage and store data across multiple networked nodes, ensuring high availability, reliability, and scalability. This project simulates a simplified version of a DFS, commonly used in large scale computing environments to distribute data storage and processing across many servers, enabling efficient data management and access.
 
 **Purpose:**
 
@@ -111,7 +111,7 @@ Distributed File System
    - Ensure data consistency and integrity.
 
 3. **Client Interface:**
-   - Provide a user-friendly interface for interacting with the DFS.
+   - Provide a user friendly interface for interacting with the DFS.
    - Allow users to perform read, write, and shutdown operations.
    - Handle network communication with the NameNode.
 
@@ -130,7 +130,7 @@ Distributed File System
 
 **Overview:**
 
-The Distributed File System (DFS) is designed with a client-server architecture consisting of three main components: the NameNode, DataNodes, and Client. The system manages file storage and retrieval across multiple networked nodes, ensuring high availability, reliability, and scalability.
+The Distributed File System is designed with a client-server architecture consisting of three main components: the NameNode, DataNodes, and Client. The system manages file storage and retrieval across multiple networked nodes, ensuring high availability, reliability, and scalability.
 
 **Architecture Diagram:**
 
